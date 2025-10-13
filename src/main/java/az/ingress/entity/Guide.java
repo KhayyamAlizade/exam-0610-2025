@@ -21,6 +21,7 @@ import static javax.persistence.FetchType.LAZY;
 public class Guide {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
     String name;

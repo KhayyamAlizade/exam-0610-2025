@@ -6,10 +6,7 @@ package az.ingress.entity;
 //import jakarta.persistence.Table;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @NoArgsConstructor
@@ -22,6 +19,7 @@ import java.util.List;
 public class Traveller {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
     String firstName;
@@ -30,6 +28,6 @@ public class Traveller {
 
     String email;
 
-    @ManyToMany(mappedBy = "trevelers")
+    @ManyToMany(mappedBy = "travelers")
     List<Tour> tours;
 }

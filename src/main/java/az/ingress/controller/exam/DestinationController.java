@@ -2,15 +2,12 @@ package az.ingress.controller.exam;
 
 import az.ingress.model.request.CreateDestinationRequest;
 import az.ingress.service.abs.DestinationService;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
-@RestController("v1/destinations")
+@RestController
+@RequestMapping("v1/destinations")
 public class DestinationController {
 
     private final DestinationService destinationService;

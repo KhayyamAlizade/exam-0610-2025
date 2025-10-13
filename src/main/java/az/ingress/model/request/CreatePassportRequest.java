@@ -1,7 +1,15 @@
 package az.ingress.model.request;
 
-import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.Date;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class CreatePassportRequest {
 
     String passportNumber;
@@ -12,6 +20,4 @@ public class CreatePassportRequest {
 
     String country;
 
-
-    Long guideId;
 }

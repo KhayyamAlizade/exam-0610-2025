@@ -18,6 +18,7 @@ public class Destination {
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
     String location;

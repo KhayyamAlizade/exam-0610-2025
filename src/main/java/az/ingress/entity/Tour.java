@@ -2,17 +2,14 @@ package az.ingress.entity;
 
 
 //import jakarta.persistence.*;
-import lombok.*;
 
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-//import static jakarta.persistence.CascadeType.MERGE;
-//import static jakarta.persistence.CascadeType.PERSIST;
-//import static jakarta.persistence.FetchType.LAZY;
 import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.FetchType.LAZY;
@@ -29,6 +26,7 @@ public class Tour {
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
     String name;
@@ -52,7 +50,7 @@ public class Tour {
 
     @ManyToMany
     @JoinTable(name = "tour_traveller",joinColumns = @JoinColumn(name = "id"))
-    List<Traveller> trevelers;
+    List<Traveller> travelers;
 
 
 }
