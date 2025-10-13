@@ -1,19 +1,21 @@
 package az.ingress.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+
 import lombok.*;
 
+
+import javax.persistence.*;
 import java.util.Date;
 
-@EqualsAndHashCode
 @NoArgsConstructor
-@AllArgsConstructor
-@Getter
+@Builder
 @Setter
+@Getter
 @Entity
+@Table(name = "destination")
+@AllArgsConstructor
 public class Destination {
+
 
     @Id
     Long id;
@@ -24,7 +26,7 @@ public class Destination {
 
     Date visitDate;
 
-    @ManyToOne()
-    Tour tourId;
-
+    @ManyToOne
+    @JoinColumn(name = "tourId")
+    Tour tour;
 }

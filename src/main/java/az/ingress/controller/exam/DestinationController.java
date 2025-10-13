@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("api/v1/destination")
+import static org.springframework.http.HttpStatus.CREATED;
+
+@RestController("v1/destinations")
 public class DestinationController {
 
     private final DestinationService destinationService;
@@ -17,8 +19,8 @@ public class DestinationController {
         this.destinationService = destinationService;
     }
 
-    @PostMapping()
-    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    @ResponseStatus(CREATED)
     public void create(@RequestBody CreateDestinationRequest destination) {
         destinationService.save(destination);
     }

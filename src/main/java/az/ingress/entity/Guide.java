@@ -1,19 +1,23 @@
 package az.ingress.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+
 import lombok.*;
 
-import java.util.ArrayList;
+
+import javax.persistence.*;
 import java.util.List;
 
-@EqualsAndHashCode
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
+
 @NoArgsConstructor
-@AllArgsConstructor
-@Getter
+@Builder
 @Setter
+@Getter
 @Entity
+@Table(name = "guide")
+@AllArgsConstructor
 public class Guide {
 
     @Id
@@ -26,8 +30,10 @@ public class Guide {
 
     String phoneNumber;
 
-
     @ManyToMany(mappedBy = "guides")
     List<Tour> tours ;
 
+    @OneToOne(cascade = {MERGE,PERSIST}, fetch =LAZY)
+    @JoinColumn(name="passport_id")
+    Passport passport;
 }

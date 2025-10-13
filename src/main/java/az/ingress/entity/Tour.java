@@ -1,22 +1,32 @@
 package az.ingress.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+
+//import jakarta.persistence.*;
 import lombok.*;
 
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-@EqualsAndHashCode
+//import static jakarta.persistence.CascadeType.MERGE;
+//import static jakarta.persistence.CascadeType.PERSIST;
+//import static jakarta.persistence.FetchType.LAZY;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
+
+
 @NoArgsConstructor
-@AllArgsConstructor
-@Getter
+@Builder
 @Setter
+@Getter
 @Entity
+@Table(name = "tour")
+@AllArgsConstructor
 public class Tour {
+
 
     @Id
     Long id;
@@ -31,11 +41,18 @@ public class Tour {
 
     Date endDate;
 
-    @OneToMany(mappedBy ="tourId" )
+
+
+    @OneToMany(mappedBy = "tour", fetch = LAZY,cascade = {MERGE,PERSIST})
     List<Destination> destination;
 
-    @ManyToMany(mappedBy = "tours")
-    List<Guide> guides;
+    @ManyToMany
+    @JoinTable(name = "tour_guides",joinColumns = @JoinColumn(name = "id"))
+    List<Guide>  guides;
+
+    @ManyToMany
+    @JoinTable(name = "tour_traveller",joinColumns = @JoinColumn(name = "id"))
+    List<Traveller> trevelers;
 
 
 }

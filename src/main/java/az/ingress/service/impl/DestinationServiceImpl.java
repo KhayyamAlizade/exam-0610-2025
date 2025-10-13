@@ -19,13 +19,13 @@ public class DestinationServiceImpl implements DestinationService {
 
     @Override
     public void save(CreateDestinationRequest request) {
-        CreateDestinationRequest destinationRequest= CreateDestinationRequest.builder().tourId(request.getTourId())
-                                                        .description(request.getDescription())
-                                                        .visitDate(request.getVisitDate())
-                                                        .location(request.getLocation())
-                                                        .build();
+//        CreateDestinationRequest destinationRequest= CreateDestinationRequest.builder().tour(request.getTour())
+//                                                        .description(request.getDescription())
+//                                                        .visitDate(request.getVisitDate())
+//                                                        .location(request.getLocation())
+//                                                        .build();
 
-       TourResponse tourResponse= Optional.ofNullable(tourService.getTourById(request.getTourID())).get();
+//       TourResponse tourResponse= Optional.ofNullable(tourService.getTourById(request.getTourID())).get();
 
     }
 }

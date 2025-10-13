@@ -4,3 +4,16 @@ server:
 logging:
   level:
     org.springframework.orm.jpa: DEBUG
+
+spring:
+      datasource:
+        url: jdbc:postgresql://localhost:5432/tourDB
+        username: postgres
+        password: postgres
+        driver-class-name: org.postgresql.Driver
+      jpa:
+        hibernate:
+          ddl-auto: update # Options: none, update, create, create-drop, validate
+        properties:
+          hibernate:
+            dialect: org.hibernate.dialect.PostgreSQLDialect

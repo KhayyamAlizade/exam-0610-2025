@@ -1,33 +1,30 @@
 package az.ingress.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.Date;
 
-@EqualsAndHashCode
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
+
 @NoArgsConstructor
-@AllArgsConstructor
-@Getter
+@Builder
 @Setter
+@Getter
 @Entity
+@Table(name = "passport")
+@AllArgsConstructor
 public class Passport {
-
-
     @Id
     Long id;
 
     String passportNumber;
-
     Date issueDate;
-
-    Date exporyDate;
-
+    Date expiryDate;
     String country;
 
-    @OneToOne()
-    Guide guideId;
-
+    @OneToOne(mappedBy = "passport")
+    Guide guide;
 }

@@ -1,11 +1,13 @@
 package az.ingress.model.request;
 
 import az.ingress.entity.Destination;
+import az.ingress.entity.Guide;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-
+@Data
 public class CreateTourRequest {
 
     String name;
@@ -18,6 +20,8 @@ public class CreateTourRequest {
 
     Date endDate;
 
-    List<Destination> destination;
+    List<CreateGuideRequest>  guides;
+
+    List<CreateDestinationRequest> destination;
 
 }
