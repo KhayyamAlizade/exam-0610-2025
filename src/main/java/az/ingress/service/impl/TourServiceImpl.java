@@ -12,10 +12,8 @@ import az.ingress.service.abs.TourService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -30,20 +28,19 @@ public class TourServiceImpl implements TourService {
                 .map(guide -> guideService.getGuideById(guide.getId()))
                 .toList();
 
-        guides.stream().filter(guide-> guide.getTours().stream().filter(tour1 -> tour1.get
-        )
+        guides.stream().filter(guide -> guide.getTours().stream().anyMatch(tour1 -> isGuideFree(tour,tour1))).;
 
 
-        Tour tourEntity = Tour.builder().name(tour.getName()).
-                endDate(tour.getEndDate()).
-                price(tour.getPrice()).
-                guides(guides).
-                startDate(tour.getStartDate())
-                .build();
+                Tour tourEntity = Tour.builder().name(tour.getName()).
+                        endDate(tour.getEndDate()).
+                        price(tour.getPrice()).
+                        guides(guides).
+                        startDate(tour.getStartDate())
+                        .build();
 
         List<Destination> destinations = tour.getDestination()
                 .stream()
-                .map(destination->DestinationMapper.INSTANCE.createRequestToDestinationEnt(destination,tourEntity))
+                .map(destination -> DestinationMapper.INSTANCE.createRequestToDestinationEnt(destination, tourEntity))
                 .toList();
         tourEntity.setDestination(destinations);
 
@@ -55,17 +52,18 @@ public class TourServiceImpl implements TourService {
         return null;
     }
 
-    public boolean isGuideFree(Tour guideTour,Tour newTour){
-        if(guideTour.getGuides() != null && newTour.getGuides() != null){
+    public boolean isGuideFree(CreateTourRequest guideTour, Tour newTour) {
+        if (guideTour.getGuides() != null && newTour.getGuides() != null) {
             Date startDate = guideTour.getStartDate();
-            Date endDate=guideTour.getEndDate();
-            if((newTour.getStartDate().before(startDate) && newTour.getEndDate().after(startDate))||
-                    (newTour.getStartDate().after(startDate) && newTour.getEndDate().after(endDate))||
-                    (newTour.getStartDate().after(startDate) && newTour.getEndDate().before(endDate))||
+            Date endDate = guideTour.getEndDate();
+            if ((newTour.getStartDate().before(startDate) && newTour.getEndDate().after(startDate)) ||
+                    (newTour.getStartDate().after(startDate) && newTour.getEndDate().after(endDate)) ||
+                    (newTour.getStartDate().after(startDate) && newTour.getEndDate().before(endDate)) ||
                     (newTour.getStartDate().after(startDate) && newTour.getEndDate().before(startDate) && newTour.getEndDate().after(endDate))) {
-                throw new RuntimeException("Guides are not free");
+                return false;
             }
 
         }
+        return true;
     }
 }
