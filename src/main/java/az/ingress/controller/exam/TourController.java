@@ -1,7 +1,6 @@
 package az.ingress.controller.exam;
 
 
-import az.ingress.mapper.TourMapper;
 import az.ingress.model.request.CreateTourRequest;
 import az.ingress.service.abs.TourService;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,6 @@ public class TourController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createTour(@RequestBody CreateTourRequest tour) {
-
         service.save(tour);
 
     }

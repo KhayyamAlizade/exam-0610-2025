@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,10 @@ public class TourServiceImpl implements TourService {
                 .stream()
                 .map(guide -> guideService.getGuideById(guide.getId()))
                 .toList();
+
+        guides.stream().filter(guide-> guide.getTours().stream().filter(tour1 -> tour1.get
+        )
+
 
         Tour tourEntity = Tour.builder().name(tour.getName()).
                 endDate(tour.getEndDate()).
@@ -48,5 +53,19 @@ public class TourServiceImpl implements TourService {
     @Override
     public TourResponse getTourById(Long id) {
         return null;
+    }
+
+    public boolean isGuideFree(Tour guideTour,Tour newTour){
+        if(guideTour.getGuides() != null && newTour.getGuides() != null){
+            Date startDate = guideTour.getStartDate();
+            Date endDate=guideTour.getEndDate();
+            if((newTour.getStartDate().before(startDate) && newTour.getEndDate().after(startDate))||
+                    (newTour.getStartDate().after(startDate) && newTour.getEndDate().after(endDate))||
+                    (newTour.getStartDate().after(startDate) && newTour.getEndDate().before(endDate))||
+                    (newTour.getStartDate().after(startDate) && newTour.getEndDate().before(startDate) && newTour.getEndDate().after(endDate))) {
+                throw new RuntimeException("Guides are not free");
+            }
+
+        }
     }
 }

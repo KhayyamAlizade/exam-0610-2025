@@ -1,6 +1,7 @@
 package az.ingress.entity;
 
 
+
 import lombok.*;
 
 

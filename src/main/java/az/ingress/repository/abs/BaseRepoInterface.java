@@ -1,8 +1,11 @@
 package az.ingress.repository.abs;
 
+import az.ingress.entity.Guide;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface   BaseRepoInterface<T> extends JpaRepository<T, Long> {
+    public Guide findGuideIfFree(Long id);
 }
+
