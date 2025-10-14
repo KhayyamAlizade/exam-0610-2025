@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class CreateTourRequest {
+    Long id;
 
     String name;
 

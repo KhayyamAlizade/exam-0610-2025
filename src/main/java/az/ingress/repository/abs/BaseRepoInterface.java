@@ -6,6 +6,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface   BaseRepoInterface<T> extends JpaRepository<T, Long> {
-    public Guide findGuideIfFree(Long id);
+    public Guide findGuideById(Long id);
 }
 

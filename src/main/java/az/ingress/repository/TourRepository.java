@@ -8,7 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TourRepository  extends BaseRepoInterface<Tour> {
-    @Override
-    @Query("select t from Tour t join fetch t.guides where t.id= :id ")
-    public Guide findGuideIfFree(@Param("id") Long id);
+
 }

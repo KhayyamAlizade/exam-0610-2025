@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface GuideRepository extends BaseRepoInterface<Guide> {
     @Override
     @Query("select g from Guide g join fetch g.tours  where g.id =:id")
-    public Guide findGuideIfFree(@Param("id")Long id);
+    public Guide findGuideById(@Param("id")Long id);
 
 }

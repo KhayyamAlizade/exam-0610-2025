@@ -4,6 +4,7 @@ import az.ingress.entity.Destination;
 import az.ingress.entity.Guide;
 import az.ingress.entity.Tour;
 import az.ingress.mapper.DestinationMapper;
+import az.ingress.mapper.TourMapper;
 import az.ingress.model.request.CreateTourRequest;
 import az.ingress.model.response.TourResponse;
 import az.ingress.repository.TourRepository;
@@ -23,18 +24,12 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public void save(CreateTourRequest tour) {
-        List<Guide> guides = tour.getGuides()
-                .stream()
-                .map(guide -> guideService.getGuideById(guide.getId()))
-                .toList();
+        List<Guide> andGetFreeGuidesOfTour = findAndGetFreeGuidesOfTour(tour);
 
-        guides.stream().filter(guide -> guide.getTours().stream().anyMatch(tour1 -> isGuideFree(tour,tour1))).;
-
-
-                Tour tourEntity = Tour.builder().name(tour.getName()).
+        Tour tourEntity = Tour.builder().name(tour.getName()).
                         endDate(tour.getEndDate()).
                         price(tour.getPrice()).
-                        guides(guides).
+                        guides(andGetFreeGuidesOfTour).
                         startDate(tour.getStartDate())
                         .build();
 
@@ -47,23 +42,55 @@ public class TourServiceImpl implements TourService {
         tourRepository.save(tourEntity);
     }
 
+
+
     @Override
-    public TourResponse getTourById(Long id) {
-        return null;
+    public void addTourGuide(CreateTourRequest request) {
+        Tour tourById = getTourById(request.getId());
+        List<Guide> guides = findAndGetFreeGuidesOfTour(request);
+        tourById.setGuides(guides);
+        tourRepository.save(tourById);
+
     }
+
+    @Override
+    public TourResponse getTour(Long id) {
+        Tour tour=getTourById(id);
+       return TourMapper.INSTANCE.tourEntityToResponse(tour);
+    }
+
+    public Tour getTourById(Long id) {
+        return  tourRepository.findById(id).get();
+    }
+
+
+    public List<Guide> findAndGetFreeGuidesOfTour(CreateTourRequest request) {
+        List<Guide> guides = request.getGuides()
+                .stream()
+                .map(guide -> guideService.getGuideById(guide.getId()))
+                .toList();
+
+        guides.stream()
+                .filter(guide -> guide.getTours().stream()
+                        .anyMatch(existingTour -> !isGuideFree(request, existingTour)))
+                .findAny()
+                .ifPresent(guide -> {
+                    throw new RuntimeException("Guide " + guide.getName() + " is busy");
+                });
+        return guides;
+    }
+
+    ;
 
     public boolean isGuideFree(CreateTourRequest guideTour, Tour newTour) {
-        if (guideTour.getGuides() != null && newTour.getGuides() != null) {
-            Date startDate = guideTour.getStartDate();
-            Date endDate = guideTour.getEndDate();
-            if ((newTour.getStartDate().before(startDate) && newTour.getEndDate().after(startDate)) ||
-                    (newTour.getStartDate().after(startDate) && newTour.getEndDate().after(endDate)) ||
-                    (newTour.getStartDate().after(startDate) && newTour.getEndDate().before(endDate)) ||
-                    (newTour.getStartDate().after(startDate) && newTour.getEndDate().before(startDate) && newTour.getEndDate().after(endDate))) {
-                return false;
-            }
+        if (guideTour == null || newTour == null) {
+            return true;
+        }
+        Date startDate = guideTour.getStartDate();
+        Date endDate = guideTour.getEndDate();
+
+        return newTour.getEndDate().before(startDate) || newTour.getStartDate().after(endDate);
 
         }
-        return true;
     }
-}
+
