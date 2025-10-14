@@ -12,5 +12,5 @@ public interface TourService {
    void addTourGuide(CreateTourRequest request);
 
 
-   TourResponse getTour(Long id);
+   TourResponse getTourDestination(Long id);
 }

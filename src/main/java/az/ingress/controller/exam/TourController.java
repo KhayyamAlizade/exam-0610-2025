@@ -30,11 +30,10 @@ public class TourController {
         service.addTourGuide(tour);
     }
 
-    @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.FOUND)
-    public TourResponse getTourDestionationsById(@RequestParam("id") Long id) {
-        return service.getTour(id);
-
+    @GetMapping("/tour/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public TourResponse getTourDestionationsById(@PathVariable("id") Long id) {
+        return service.getTourDestination(id);
     }
 
 

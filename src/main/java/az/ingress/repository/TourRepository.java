@@ -8,5 +8,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TourRepository  extends BaseRepoInterface<Tour> {
+    @Query("select t from Tour t  join fetch t.destination where t.id=:id")
+    public Tour findTourDestinationById(@Param("id") Long id);
+
 
 }

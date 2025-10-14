@@ -54,8 +54,8 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public TourResponse getTour(Long id) {
-        Tour tour=getTourById(id);
+    public TourResponse getTourDestination(Long id) {
+        Tour tour=tourRepository.findTourDestinationById(id);
        return TourMapper.INSTANCE.tourEntityToResponse(tour);
     }
 

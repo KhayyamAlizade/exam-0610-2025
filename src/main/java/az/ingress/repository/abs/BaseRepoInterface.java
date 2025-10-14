@@ -1,11 +1,13 @@
 package az.ingress.repository.abs;
 
 import az.ingress.entity.Guide;
+import az.ingress.entity.Tour;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface   BaseRepoInterface<T> extends JpaRepository<T, Long> {
     public Guide findGuideById(Long id);
+    public Tour findTourDestinationById(Long id);
 }
 
