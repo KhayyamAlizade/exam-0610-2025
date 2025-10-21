@@ -1,6 +1,7 @@
 package az.ingress.controller.exam;
 
 import az.ingress.model.request.CreateGuideRequest;
+import az.ingress.model.response.GuideResponse;
 import az.ingress.service.abs.GuideService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,11 @@ public class GuideController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createGuide(@RequestBody CreateGuideRequest guide) {
         guideService.save(guide);
+    }
 
+    @GetMapping("guide/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public GuideResponse getGuide(@PathVariable Long id){
+         return guideService.getGuideResponseById(id);
     }
 }

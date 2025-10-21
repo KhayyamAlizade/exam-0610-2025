@@ -3,6 +3,8 @@ package az.ingress.mapper;
 import az.ingress.entity.Guide;
 import az.ingress.entity.Passport;
 import az.ingress.model.request.CreateGuideRequest;
+import az.ingress.model.response.GuideResponse;
+import org.springframework.stereotype.Component;
 
 public enum GuideMapper {
 
@@ -20,4 +22,13 @@ public enum GuideMapper {
                 build();
 
     }
+     public GuideResponse GuideToGuideResponse(Guide guide) {
+            return GuideResponse.builder().
+                    id(guide.getId()).
+                    email(guide.getEmail()).
+                    name(guide.getName()).
+                    phoneNumber(guide.getPhoneNumber())
+                    .build();
+
+     }
 }
