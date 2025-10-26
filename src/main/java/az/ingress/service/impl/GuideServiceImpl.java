@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.beans.Transient;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -35,16 +38,24 @@ public class GuideServiceImpl implements GuideService {
     }
     @Override
     public Guide getGuideById(Long id) {
+        System.out.println(LocalDateTime.now());
      return  guideRepository.findGuideById(id);
     }
 
-    @Transactional
+
     @Override
     public GuideResponse getGuideResponseById(Long id) {
-        Guide guideById = getGuideById(id);
-        Passport passport = guideById.getPassport();
+        Optional<Guide> guidefromHiber=  guideRepository.findById(id);
+        if(guidefromHiber.isPresent()){
+            System.out.println("hiberdane gelen var");
+        }
+        Guide GuideFromMy = getGuideById(id);
+        if(GuideFromMy!=null){
+            System.out.println("Mennen gelende var");
+        }
+        Passport passport = GuideFromMy.getPassport();
        Date issDate= passport.getIssueDate();
-        return guideMapper.GuideToGuideResponse(guideById);
+        return guideMapper.GuideToGuideResponse(GuideFromMy);
 
     }
     @Override
