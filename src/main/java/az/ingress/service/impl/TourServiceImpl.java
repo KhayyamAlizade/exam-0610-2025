@@ -78,9 +78,7 @@ public class TourServiceImpl implements TourService {
                     throw new RuntimeException("Guide " + guide.getName() + " is busy");
                 });
         return guides;
-    }
-
-    ;
+    };
 
     public boolean isGuideFree(CreateTourRequest guideTour, Tour newTour) {
         if (guideTour == null || newTour == null) {

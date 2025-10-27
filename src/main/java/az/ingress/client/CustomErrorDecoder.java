@@ -2,6 +2,7 @@ package az.ingress.client;
 
 
 
+import az.ingress.exception.CustomFeignException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,7 +11,13 @@ import feign.Response;
 import feign.codec.ErrorDecoder;
 import lombok.extern.slf4j.Slf4j;
 
-import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.MESSAGE;
+import static az.ingress.client.JsonNodeFieldName.CODE;
+import static az.ingress.client.JsonNodeFieldName.MESSAGE;
+import static az.ingress.enums.error.CustomClientExceptions.CLIENT_ERROR_CODE;
+import static az.ingress.enums.error.CustomClientExceptions.CLIENT_ERROR_MESSAGE;
+import static az.ingress.enums.error.ExceptionConstants.CLIENT_ERROR_CODE;
+import static az.ingress.enums.error.ExceptionConstants.CLIENT_ERROR_MESSAGE;
+
 
 @Slf4j
 public class CustomErrorDecoder implements ErrorDecoder {
@@ -27,12 +34,12 @@ public class CustomErrorDecoder implements ErrorDecoder {
             throw new CustomFeignException(errorMessage, response.status(), errorCode);
         }
 
-        if (jsonNode.has(MESSAGE.getValue())) {
-            errorMessage = jsonNode.get(MESSAGE.getValue()).asText();
+        if (jsonNode.has(MESSAGE.getName())) {
+            errorMessage = jsonNode.get(MESSAGE.getName()).asText().toString();
         }
 
-        if (jsonNode.has(CODE.getValue())) {
-            errorCode = jsonNode.get(CODE.getValue()).asText();
+        if (jsonNode.has(CODE.getName())) {
+            errorCode = jsonNode.get(CODE.getName()).asText();
         }
 
         log.error("ActionLog.decode.error Message: {}, Method: {}", errorMessage, methodKey);
