@@ -3,6 +3,9 @@ plugins {
     id "org.springframework.boot" version "$springBootVersion"
     id "io.spring.dependency-management" version "$dependencyManagementVersion"
 }
+ext {
+    springCloudVersion = "2021.0.8"
+}
 
 group = "az.ingress"
 sourceCompatibility = "17"
@@ -19,7 +22,14 @@ repositories {
 
 dependencies {
     //spring
-    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+
 
     //lombok
     compileOnly "org.projectlombok:lombok"
@@ -30,8 +40,14 @@ dependencies {
 
     //testing
     testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation 'org.springframework.amqp:spring-rabbit-test'
 }
 
 test {
     useJUnitPlatform()
+}
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+    }
 }
