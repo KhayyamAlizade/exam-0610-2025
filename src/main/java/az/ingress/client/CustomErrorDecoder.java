@@ -1,20 +1,15 @@
 package az.ingress.client;
 
 
-
 import az.ingress.exception.CustomFeignException;
 import com.fasterxml.jackson.databind.JsonNode;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
-
 import feign.codec.ErrorDecoder;
 import lombok.extern.slf4j.Slf4j;
 
 import static az.ingress.client.JsonNodeFieldName.CODE;
 import static az.ingress.client.JsonNodeFieldName.MESSAGE;
-import static az.ingress.enums.error.CustomClientExceptions.CLIENT_ERROR_CODE;
-import static az.ingress.enums.error.CustomClientExceptions.CLIENT_ERROR_MESSAGE;
 import static az.ingress.enums.error.ExceptionConstants.CLIENT_ERROR_CODE;
 import static az.ingress.enums.error.ExceptionConstants.CLIENT_ERROR_MESSAGE;
 
